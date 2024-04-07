@@ -1,0 +1,81 @@
+import { useState } from 'react'
+
+const App = () => {
+  // tallenna napit omaan tilaansa
+  const [good, setGood] = useState(0)
+  const [neutral, setNeutral] = useState(0)
+  const [bad, setBad] = useState(0)
+  const [all, setAll] = useState(0)
+  const [sum, setSum] = useState(0)
+  const [percentage, setPercentage] = useState(0)
+
+  const updateAverage = () => {
+    const average = sum / all
+    return average
+  }
+
+  const updatePercentage = () => {
+    const newPercentage = (good / all) * 100
+      return newPercentage
+  }
+    
+  const goodclick = () => {
+    const updatedGood = good + 1
+    const updatedAll = all + 1
+    const updatedSum = sum + 1
+    setGood(updatedGood)
+    setAll(updatedAll)
+    setSum(updatedSum)
+    updateAverage();
+
+    
+    console.log("Täydellinen: " ,updatedGood)
+    console.log("Yhteensä: " ,updatedAll)
+  }
+
+  const neutralClick = () => {
+    const updatedNeutral = neutral + 1
+    const updatedAll = all + 1
+
+    setNeutral(updatedNeutral)
+    setAll(updatedAll)
+    updateAverage();
+
+    console.log("Ihan ok: ", updatedNeutral)
+    console.log("Yhteensä: " ,updatedAll)
+  }
+
+  const badClick = () => {
+    const updatedBad = bad + 1
+    const updatedAll = all + 1
+    const updatedSum = sum - 1
+
+    setBad(updatedBad)
+    setAll(updatedAll)
+    setSum(updatedSum)
+    updateAverage()
+
+    console.log("Hyi: ", updatedBad)
+    console.log("Yhteensä: " ,updatedAll)
+    
+  }
+
+  return (
+    <div>
+      <h1>Palaute</h1>
+      <p>
+      <button onClick={goodclick}> Täydellinen </button>
+      <button onClick={neutralClick}>Ihan ok</button>
+      <button onClick={badClick}>Hyi</button>
+      </p>
+      <h2>Arviot</h2>
+      <div>Täydellinen: {good}</div>
+      <div>Ihan ok: {neutral}</div>
+      <div>Hyi: {bad}</div>
+      <div>Yhteensä: {all}</div>
+      <div>Keskiarvo: {updateAverage()}</div>
+      <div>Positiivisia: {updatePercentage()}%</div>
+    </div>
+  )
+  }
+export default App
